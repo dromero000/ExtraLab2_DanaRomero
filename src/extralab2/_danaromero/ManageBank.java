@@ -56,6 +56,7 @@ public class ManageBank {
                 rcuentas.writeLong(Calendar.getInstance().getTimeInMillis());
                 rcuentas.writeDouble(tipo.minSaldo);
                 rcuentas.writeUTF(tipo.name());
+                System.out.println("La cuenta fue creada exitosamente");
             }else{
                 throw new AccountAlreadyExists(code);
             }
@@ -63,7 +64,7 @@ public class ManageBank {
         }
     }
     
-    public void deposito(int code, double monto) throws IOException{
+    public boolean deposito(int code, double monto) throws IOException{
         long pos =buscar(code);
         if(pos!=1){
             rcuentas.readUTF();
@@ -73,7 +74,11 @@ public class ManageBank {
             rcuentas.readUTF();
             rcuentas.writeLong(Calendar.getInstance().getTimeInMillis());
             rcuentas.writeDouble(saldoActual+monto);
+            return true;
+        }else{
+            System.out.println("La cuenta "+ code+" no existe");
         }
+        return false;
     }
     
     public boolean retiro(int code, double monto) throws IOException{
@@ -90,6 +95,8 @@ public class ManageBank {
                 return true;
             }
             
+        }else{
+            System.out.println("La cuenta "+ code+" no existe");
         }
         return false;
     }
@@ -119,7 +126,8 @@ public class ManageBank {
             rcuentas.skipBytes(8);
             double saldo = rcuentas.readDouble();
             String tipo =rcuentas.readUTF();
-            archivo.write(codigo+" - "+nombre+" - Lps. "+saldo+" - Tipo "+ tipo);
+            archivo.write(codigo+" - "+nombre+" - Lps. "+saldo+" - Tipo "+ tipo+"\n");
+            archivo.flush();
         }          
         
     }

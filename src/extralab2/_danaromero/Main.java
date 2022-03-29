@@ -41,9 +41,9 @@ public class Main {
                         System.out.print("Ingrese tipo: ");
                         TipoCuenta tipo = TipoCuenta.values()[leer.nextInt()];
                         try{
-                            mb.addCuenta(code, nombre, TipoCuenta.VIP);
+                            mb.addCuenta(code, nombre, tipo);
                         }catch(AccountAlreadyExists ex){
-                            System.out.println(ex);
+                            System.out.println(ex.getMessage());
                         }
                         break;
                     case 2:
@@ -52,7 +52,11 @@ public class Main {
                         code = leer.nextInt();
                         System.out.print("Ingrese monto: ");
                         Double monto = leer.nextDouble();
-                        mb.deposito(code, monto);
+                        if(mb.deposito(code, monto)){
+                            System.out.println("Se depositó Lps."+monto+" en la cuenta "+code);
+                        }else{
+                            System.out.println("No se pudo efectuar el depósito");
+                        }
                         break;
                     case 3:
                         System.out.println("---Retirar---");
@@ -60,11 +64,16 @@ public class Main {
                         code = leer.nextInt();
                         System.out.print("Ingrese monto: ");
                         monto = leer.nextDouble();
-                        mb.retiro(code, monto);
+                        if(mb.retiro(code, monto)){
+                            System.out.println("Se retiró Lps."+monto+" de la cuenta "+code);
+                        }else{
+                            System.out.println("No se pudo efectuar el retiro");
+                        }
                         break;
                     case 4:
                         System.out.println("---Registrar Intereses---");
                         mb.registrarIntereses();
+                        System.out.println("Los intereses fueron registradoes exitosamente");
                         break;
                     case 5:
                         System.out.println("---Importar---");
@@ -76,8 +85,8 @@ public class Main {
                         System.out.println("¡GRACIAS!");
                         break;
                 }
-            } catch (IOException ex) {
+            } catch (Exception ex) {
             }
-        }while(opcion!=0);
+        }while(opcion!=6);
     }
 }
