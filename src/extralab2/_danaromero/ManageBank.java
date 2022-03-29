@@ -11,6 +11,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,16 +47,19 @@ public class ManageBank {
     }
     
     
-    public void addCeunta(int code, String nombre, TipoCuenta tipo) throws AccountAlreadyExists, IOException{
-        if(buscar(code)==1){
-            rcuentas.seek(rcuentas.length());
-            rcuentas.writeInt(code);
-            rcuentas.writeUTF(nombre);
-            rcuentas.writeLong(Calendar.getInstance().getTimeInMillis());
-            rcuentas.writeDouble(tipo.minSaldo);
-            rcuentas.writeUTF(tipo.name());
-        }else{
-            throw new AccountAlreadyExists(code);
+    public void addCuenta(int code, String nombre, TipoCuenta tipo) throws AccountAlreadyExists{
+        try {
+            if(buscar(code)==1){
+                rcuentas.seek(rcuentas.length());
+                rcuentas.writeInt(code);
+                rcuentas.writeUTF(nombre);
+                rcuentas.writeLong(Calendar.getInstance().getTimeInMillis());
+                rcuentas.writeDouble(tipo.minSaldo);
+                rcuentas.writeUTF(tipo.name());
+            }else{
+                throw new AccountAlreadyExists(code);
+            }
+        } catch (IOException ex) {
         }
     }
     
