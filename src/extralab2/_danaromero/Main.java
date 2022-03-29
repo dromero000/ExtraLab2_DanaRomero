@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class Main {
     
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         Scanner leer = new Scanner(System.in).useDelimiter("\n");
         ManageBank mb = new ManageBank();
         int opcion=0;

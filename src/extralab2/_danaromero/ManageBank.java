@@ -11,8 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  *
@@ -23,12 +22,16 @@ public class ManageBank {
     RandomAccessFile rcuentas;
     
     //Constructor
-    public ManageBank() throws FileNotFoundException{
-        File folder = new File("banco");
-        if(!folder.exists())
-            folder.mkdir();
+    public ManageBank(){
         
-        rcuentas = new RandomAccessFile("banco/cuentas.bnk","rw");
+        try {
+            File folder = new File("banco");
+            if(!folder.exists())
+                folder.mkdir();
+            
+            rcuentas = new RandomAccessFile("banco/cuentas.bnk","rw");
+        } catch (FileNotFoundException ex) {
+        }
     }
     
     public long buscar (int code) throws IOException{
