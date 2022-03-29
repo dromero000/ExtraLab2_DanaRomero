@@ -10,7 +10,7 @@ package extralab2._danaromero;
  * @author Dana Romero
  */
 public enum TipoCuenta {
-    NROMAL(0.02,500), PLANILLA(0,200), VIP(0.04,1000);
+    NORMAL(0.02,500), PLANILLA(0,200), VIP(0.04,1000);
     public double tasaInteres, minSaldo;
     
     TipoCuenta (double tasa, double saldo){
